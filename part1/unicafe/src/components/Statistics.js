@@ -1,4 +1,5 @@
 import React from 'react'
+import { StatisticsLine } from './StatisticsLine'
 
 export const Statistics = ({good, neutral, bad}) => {
 
@@ -11,12 +12,12 @@ export const Statistics = ({good, neutral, bad}) => {
         <h1>statistics</h1>
         {all ?
         <div>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {all}</p>
-        <p>average {average} </p>
-        <p>positive {positive} %</p>
+        <StatisticsLine text='good' value={good}/>
+        <StatisticsLine text='neutral' value={neutral}/>
+        <StatisticsLine text='bad' value={bad}/>
+        <StatisticsLine text='all' value={all}/>
+        <StatisticsLine text='average' value={average}/>
+        <StatisticsLine text='positive' value={positive} symbol='%' />
         </div>
         :
         <div>
