@@ -1,7 +1,9 @@
 import React from 'react'
 
 export const Total = ({parts}) => {
+  let total = 0
+  parts.map(p=> total+=p.exercises)
   return (
-    <div>Number of exercises {parts[0].exercises+parts[1].exercises+parts[2].exercises}</div>
+    <div><b>Total of {total} exercises</b></div>
   )
 }
