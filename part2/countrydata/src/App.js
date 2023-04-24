@@ -8,6 +8,7 @@ function App() {
 
   const [countries, setCountries] = useState([])
   const [toShow, setToShow] = useState([])
+  const [weather, setWeather] = useState([])
 
 
   const getCountries = () => {
@@ -17,6 +18,13 @@ function App() {
   }
 
   useEffect(getCountries, [])
+
+  const getWeather = (city) => {
+    const apiKey = process.env.REACT_APP_API_KEY
+    axios
+      .get(`http://api.weatherstack.com/current?access_key=${apiKey}&query=${city}`)
+      .then(response => setWeather(response.data))
+  }
 
   const handleInput = (e) => {
     if(e.target.value === ''){
@@ -36,7 +44,7 @@ function App() {
   return (
     <div className="App">
       <SearchForm handleInput={handleInput} />
-      <Main toShow={toShow} handleShow={handleShow}/>
+      <Main toShow={toShow} handleShow={handleShow} getWeather={getWeather} weather={weather} />
     </div>
   );
 }
