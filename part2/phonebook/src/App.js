@@ -77,10 +77,6 @@ function App() {
       .then(
         setPersons(newPersons)
       )
-      .catch(error => {
-       setMessage({text:`'Information of ${name}' has already removed`,type:'error'})
-        setTimeout(() => {setMessage(null)}, 5000) 
-      })
   }
 
   return (
