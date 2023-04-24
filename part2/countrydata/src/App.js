@@ -27,10 +27,16 @@ function App() {
     }
   }
 
+  const handleShow = (e) => {
+    console.log(e)
+    const filtered = countries.filter(c => c.name.common === e)
+    setToShow(filtered)
+  }
+
   return (
     <div className="App">
       <SearchForm handleInput={handleInput} />
-      <Main toShow={toShow} />
+      <Main toShow={toShow} handleShow={handleShow}/>
     </div>
   );
 }

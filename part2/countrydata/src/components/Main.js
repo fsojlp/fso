@@ -2,7 +2,7 @@ import React from 'react'
 import { Country } from './Country';
 import { List } from './List';
 
-export const Main = ({toShow}) => {
+export const Main = ({toShow, handleShow}) => {
 
   let message = ''
   if (toShow.length === 0) {
@@ -18,7 +18,7 @@ export const Main = ({toShow}) => {
         <Country country={toShow[0]} /> 
       : 
         toShow.length <= 10 ?
-          <List toShow={toShow}/>
+          <List toShow={toShow} handleShow={handleShow} />
         :
         <></>
       }
