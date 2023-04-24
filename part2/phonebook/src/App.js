@@ -24,8 +24,8 @@ function App() {
     const exist = persons.filter(u => u.name === newName)
     const newPerson = {name: newName, number:newNumber}
     exist.length >  0 
-      ? 
-        alert(`${newName} is already added to phonebook`) 
+      ?
+      actualize(exist[0])
       :
       people.create(newPerson).then(returnedPerson => {
         newPersons.push(returnedPerson)
@@ -34,6 +34,23 @@ function App() {
         document.getElementById('inputName').value=''
         document.getElementById('inputNumber').value=''
       })
+  }
+
+  const actualize = (person) => {
+    const newUpdate = {name: person.name, number:newNumber}
+    if(window.confirm(`${person.name} already exist. Update?`)){
+      console.log(person.id)
+      people.update(person.id, newUpdate).then(returnedPerson => {
+        const personsToUpdate = persons.filter(p => p.name !== returnedPerson.name)
+        personsToUpdate.push(returnedPerson)
+        setPersons(personsToUpdate)
+      })
+    }else{
+      setNewName('')
+      setNewNumber('')
+      document.getElementById('inputName').value=''
+      document.getElementById('inputNumber').value=''
+    }
   }
 
   const newPerson = (e) => {
