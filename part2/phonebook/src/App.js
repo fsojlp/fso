@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './App.css';
-import axios from 'axios';
 import { Heading } from './components/Heading';
 import { Filter } from './components/Filter';
 import { Form } from './components/Form';
 import { PhoneList } from './components/PhoneList';
+import people from './services/persons';
 
 function App() {
   const [ persons, setPersons ] = useState([])
@@ -13,13 +13,8 @@ function App() {
   const [ filtered, setFiltered ] = useState(null)
 
   const hook = () => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons(response.data)
-    })
+    people.getAll().then(returnedPersons => setPersons(returnedPersons))
   }
-
   useEffect(hook, [])
 
 
@@ -27,19 +22,18 @@ function App() {
     e.preventDefault()
     let newPersons = [...persons]
     const exist = persons.filter(u => u.name === newName)
+    const newPerson = {name: newName, number:newNumber}
     exist.length >  0 
       ? 
         alert(`${newName} is already added to phonebook`) 
       :
-        axios
-          .post('http://localhost:3001/persons', {name: newName, number:newNumber})
-          .then(response => {
-            newPersons.push({name: newName, number:newNumber})
-            setPersons(newPersons)
-            setNewName('')
-            document.getElementById('inputName').value=''
-            document.getElementById('inputNumber').value=''
-          })
+      people.create(newPerson).then(returnedPerson => {
+        newPersons.push(returnedPerson)
+        setPersons(newPersons)
+        setNewName('')
+        document.getElementById('inputName').value=''
+        document.getElementById('inputNumber').value=''
+      })
   }
 
   const newPerson = (e) => {
