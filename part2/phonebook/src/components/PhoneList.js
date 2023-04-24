@@ -9,11 +9,11 @@ export const PhoneList = ({ filtered, persons }) => {
         {
             !filtered ? persons.length 
                 ? 
-                persons.map(p => <Phone x={p} />) 
+                persons.map(p => <Phone key={p.name} x={p} />) 
                 : 
                 <p>No persons</p>
                 :
-            filtered.map(f => <Phone x={f} />)
+            filtered.map(f => <Phone key={f.name} x={f} />)
       }
     </>
   )

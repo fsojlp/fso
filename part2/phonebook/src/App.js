@@ -31,11 +31,15 @@ function App() {
       ? 
         alert(`${newName} is already added to phonebook`) 
       :
-        newPersons.push({name: newName, number:newNumber})
-        setPersons(newPersons)
-        setNewName('')
-        document.getElementById('inputName').value=''
-        document.getElementById('inputNumber').value=''
+        axios
+          .post('http://localhost:3001/persons', {name: newName, number:newNumber})
+          .then(response => {
+            newPersons.push({name: newName, number:newNumber})
+            setPersons(newPersons)
+            setNewName('')
+            document.getElementById('inputName').value=''
+            document.getElementById('inputNumber').value=''
+          })
   }
 
   const newPerson = (e) => {
