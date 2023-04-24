@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const Phone = ({ x }) => {
+export const Phone = ({ x, handleDelete }) => {
   return (
-    <p key={x.name}>{x.name} {x.number}</p>
+    <p key={x.name}>{x.name} {x.number} <button onClick={() => {if (window.confirm(`Delete ${x.name}`)) handleDelete(x.id)}}>delete</button></p>
   )
 }

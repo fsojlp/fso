@@ -47,15 +47,22 @@ function App() {
   const handleFilter = (e) => {
     const newfilter = persons.filter(p => p.name.toLowerCase().includes(e.target.value.toLowerCase()))
     setFiltered(newfilter)
-
   }
+
+  const handleDelete = (id) => {
+    const newPersons = persons.filter(p => persons.id !== id)
+    people.erase(id).then(
+      setPersons(newPersons)
+    )
+  }
+
   console.log(persons)
   return (
     <div className="App">
       <Heading text='Phonebook' />
       <Filter handle={handleFilter} />
       <Form submit={addPerson} change1={newPerson} change2={newPhone} />
-      <PhoneList persons={persons} filtered={filtered}/>
+      <PhoneList persons={persons} filtered={filtered} handleDelete={handleDelete} />
     </div>
   );
 }
