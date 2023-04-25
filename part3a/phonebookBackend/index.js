@@ -1,7 +1,8 @@
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
-app.use(morgan('tiny'))
+app.use(express.json())
+app.use(morgan(':method :url :status :res[content] - :response-time ms :date[web]'))
 
 let persons = [
     {
@@ -53,8 +54,6 @@ app.get('/api/persons/:id', (request, response) => {
 const generateId = () => {
     return Math.floor(Math.random() * 1000) 
 }
-
-app.use(express.json())
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
