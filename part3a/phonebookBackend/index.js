@@ -1,13 +1,29 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const mongoose = require('mongoose')
 const app = express()
+require('dotenv').config();
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content] - :response-time ms :date[web]'))
 app.use(cors())
 app.use(express.static('build'))
 
-let persons = [
+//handle mongoDB
+    const url = process.env.MONGO_URL
+
+    mongoose.connect(url)
+
+    const personsSchema = new mongoose.Schema({
+        name: String,
+        number: String,
+    })
+
+    const Persons = mongoose.model('Persons', personsSchema)
+
+//end handle mongoDB
+
+/*let persons = [
     {
         "name": "Arto Hellas",
         "number": "040-123456",
@@ -28,7 +44,7 @@ let persons = [
         "number": "39-23-6423122",
         "id": 4
       }
-]
+]*/
 
 app.get('/info', (request, response)=> {
     const people = persons.length
@@ -41,7 +57,7 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Persons.find({}).then(result => {response.json(result)})
 })
 
 app.get('/api/persons/:id', (request, response) => {
