@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const personModel = require('../models/person')
+
 router.get('/', async (request, response) => {
     const saved = await personModel.find()
     if (saved) {
@@ -18,7 +19,12 @@ router.get('/', async (request, response) => {
 router.get('/:id', async (request, response) => {
     personModel.findById(request.params.id)
     .then(person => {
-            response.json(person)
+            const nPerson = {
+                name:person.name,
+                number:person.number,
+                id:person.id
+            }
+            response.json(nPerson)
     })
     .catch(error => {
         response.json({'error':error.message})   

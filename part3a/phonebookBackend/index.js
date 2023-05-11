@@ -4,6 +4,7 @@ const cors = require('cors')
 const errorHandler = require('./middlewares/errorHandler')
 const app = express()
 const personsRoutes = require('./routes/persons')
+const personModel = require('./models/person')
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content] - :response-time ms :date[web]'))
 app.use(cors())
@@ -25,6 +26,19 @@ module.exports = {url, mongoose}
 app.get('/', (request, response) => {
     response.send('<h1>Phonebook Backend</h1>')
 })
+
+app.get('/info', async (request, response) => {
+    const saved = await personModel.find()
+    if(saved){
+        try {
+            response.send(`<h1>Phonebook has ${saved.length} contacts</h1>`)
+        }
+        catch (error) {
+            response.status(404).end()
+        }
+    }
+})
+
 
 app.use('/api/persons', personsRoutes)
 
