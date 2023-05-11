@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const personModel = require('../models/person')
-const errorHandler = require('../middlewares/errorHandler')
 router.get('/', async (request, response) => {
     const saved = await personModel.find()
     if (saved) {
@@ -26,7 +25,7 @@ router.get('/:id', async (request, response) => {
     })
 })
 
-router.post('/', (request, response) => {
+router.post('/', async (request, response, next) => {
     const body = request.body
 
     if (!body.name) {
@@ -47,15 +46,23 @@ router.post('/', (request, response) => {
 
     try {
         const savedPerson = person.save()
-
         response.json({
             error:null,
             data:savedPerson
         })
-        
     } catch (error) {
         response.status(400).json({error})
     }
+})
+
+router.put('/:id', async (request, response, next) => {
+
+    const idn = request.params.id
+    await personModel.findByIdAndUpdate(idn, {number: request.body.number}, {new:true})
+    .then(updatedPerson => {
+        response.json(updatedPerson)
+    })
+    .catch(error => next(error))
 })
 
 router.delete('/:id', (request, response, next) => {
