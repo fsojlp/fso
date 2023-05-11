@@ -58,4 +58,11 @@ router.post('/', (request, response) => {
     }
 })
 
+router.delete('/:id', (request, response) => {
+    personModel.findByIdAndRemove(request.params.id)
+    .then(result => {
+        response.status(204).end()
+    })
+    .catch(error => next(error))
+})
 module.exports = router
