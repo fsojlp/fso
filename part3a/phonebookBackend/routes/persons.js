@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const personModel = require('../models/person')
-
+const errorHandler = require('../middlewares/errorHandler')
 router.get('/', async (request, response) => {
     const saved = await personModel.find()
     if (saved) {
@@ -58,7 +58,7 @@ router.post('/', (request, response) => {
     }
 })
 
-router.delete('/:id', (request, response) => {
+router.delete('/:id', (request, response, next) => {
     personModel.findByIdAndRemove(request.params.id)
     .then(result => {
         response.status(204).end()

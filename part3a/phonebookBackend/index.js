@@ -1,6 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const errorHandler = require('./middlewares/errorHandler')
 const app = express()
 const personsRoutes = require('./routes/persons')
 app.use(express.json())
@@ -32,6 +33,7 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.use(unknownEndpoint)
+app.use(errorHandler)
 
 const PORT = 3001
 app.listen(PORT, () => {
