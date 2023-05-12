@@ -15,7 +15,7 @@ function App() {
   const [ message, setMessage ] = useState(null)
 
   const hook = () => {
-    people.getAll().then(returnedPersons => setPersons(returnedPersons))
+    people.getAll().then(returnedPersons => setPersons(returnedPersons.data))
   }
   useEffect(hook, [])
 
@@ -29,25 +29,39 @@ function App() {
       ?
       actualize(exist[0])
       :
-      people.create(newPerson).then(returnedPerson => {
-        newPersons.push(returnedPerson)
-        setPersons(newPersons)
-        setNewName('')
-        document.getElementById('inputName').value=''
-        document.getElementById('inputNumber').value=''
-        setMessage({text:`'${returnedPerson.name}' was added`,type:'success'})
-        setTimeout(() => {setMessage(null)}, 5000)
-      })
+      people.create(newPerson)
+        .then(returnedPerson => {
+          newPersons.push(newPerson)
+          setPersons(newPersons)
+          setNewName('')
+          document.getElementById('inputName').value=''
+          document.getElementById('inputNumber').value=''
+          setMessage({text:`'${returnedPerson.name}' was added`,type:'success'})
+          setTimeout(() => {setMessage(null)}, 5000)
+        })
+        .catch(error => {
+          setMessage({text:`'${error.response.data.error}'`,type:'error'})
+          setTimeout(() => {setMessage(null)}, 5000)
+        })
   }
 
   const actualize = (person) => {
     const newUpdate = {name: person.name, number:newNumber}
     if(window.confirm(`${person.name} already exist. Update?`)){
-      people.update(person.id, newUpdate).then(returnedPerson => {
+      people.update(person._id, newUpdate)
+      .then(returnedPerson => {
         const personsToUpdate = persons.filter(p => p.name !== returnedPerson.name)
         personsToUpdate.push(returnedPerson)
         setPersons(personsToUpdate)
+        setNewName('')
+        setNewNumber('')
+        document.getElementById('inputName').value=''
+        document.getElementById('inputNumber').value=''
         setMessage({text:`'${returnedPerson.name}' was updated`,type:'success'})
+        setTimeout(() => {setMessage(null)}, 5000)
+      })
+      .catch(error => {
+        setMessage({text:`'${error.response.data.error}'`,type:'error'})
         setTimeout(() => {setMessage(null)}, 5000)
       })
     }else{
@@ -72,10 +86,13 @@ function App() {
   }
 
   const handleDelete = (id, name) => {
-    const newPersons = persons.filter(p => persons.id !== id)
+    const newPersons = persons.filter(p => p._id !== id)
+    console.log(newPersons)
     people.erase(id)
       .then(
-        setPersons(newPersons)
+        setPersons(newPersons),
+        setMessage({text:`'Information of ${name}' has been removed`,type:'success'}),
+        setTimeout(() => {setMessage(null)}, 5000)
       )
       .catch(error => {
        setMessage({text:`'Information of ${name}' has already removed`,type:'error'})

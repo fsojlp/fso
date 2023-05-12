@@ -54,7 +54,7 @@ router.post('/', async (request, response, next) => {
     .then( result => {
         response.json({
             error:null,
-            data:savedPerson
+            data:person
         })
     })
     .catch(error => next(error))

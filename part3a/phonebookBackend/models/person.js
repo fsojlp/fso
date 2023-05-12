@@ -5,14 +5,14 @@ const personSchema = mongoose.Schema({
     name: {
         type: String,
         require: true,
-        min: 2,
+        minlength: 3,
         max: 25,
         unique:true
     },
     number: {
         type: String,
         require: true,
-        min: 2,
+        minlength: 8,
         max: 25
     }
 })
