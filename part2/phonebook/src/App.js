@@ -87,7 +87,6 @@ function App() {
 
   const handleDelete = (id, name) => {
     const newPersons = persons.filter(p => p._id !== id)
-    console.log(newPersons)
     people.erase(id)
       .then(
         setPersons(newPersons),

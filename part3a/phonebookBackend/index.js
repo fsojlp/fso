@@ -8,6 +8,7 @@ const personModel = require('./models/person')
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content] - :response-time ms :date[web]'))
 app.use(cors())
+app.use(express.static('build'))
 
 require('dotenv').config()
 const mongoose = require('mongoose')
