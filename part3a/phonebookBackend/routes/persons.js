@@ -50,15 +50,14 @@ router.post('/', async (request, response, next) => {
         number: body.number
     })
 
-    try {
-        const savedPerson = person.save()
+    person.save()
+    .then( result => {
         response.json({
             error:null,
             data:savedPerson
         })
-    } catch (error) {
-        response.status(400).json({error})
-    }
+    })
+    .catch(error => next(error))
 })
 
 router.put('/:id', async (request, response, next) => {
