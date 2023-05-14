@@ -12,7 +12,27 @@ const totalLikes = (blogList) => {
     }
 }
 
+const favoriteBlog = (blogList) => {
+    const formattedBlog = (blog) => {
+        return { title: blog.title, author: blog.author, likes: blog.likes }
+    }
+
+    if (blogList.length === 0){
+        return 0
+    }
+
+    if (blogList.length === 1){
+        return formattedBlog(blogList[0])
+    } else {
+        const favourite = blogList.reduce((previous, current) => {
+            return current.likes > previous.likes ? current : previous
+        })
+        return formattedBlog(favourite)
+    }
+}
+
 module.exports = {
   dummy,
-  totalLikes
+  totalLikes,
+  favoriteBlog
 }
