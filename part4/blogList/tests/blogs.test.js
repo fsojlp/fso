@@ -32,7 +32,7 @@ test('verifies that making a POST request successfully creates a new blog post',
   const newBlog = {
     title: "Test Blog",
     author: "11P",
-    url: "hhtps://jlpalacios.es",
+    url: "https://jlpalacios.es",
     likes: 0
   }
 
@@ -44,6 +44,23 @@ test('verifies that making a POST request successfully creates a new blog post',
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.list.length + 1)
+})
+
+test('verifies that if the likes property is missing from the request, it will default to 0', async () => {
+  const newBlog = {
+    title: "Test Blog 2",
+    author: "11P",
+    url: "https://jlpalacios.es"
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+  
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd[blogsAtEnd.length-1].likes).toBe(0)
 })
 
 afterAll(() => {
