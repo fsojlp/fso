@@ -28,6 +28,24 @@ test('unique identifier of each blog is "_id"', async () => {
   response.body.map(b => expect(b.id).toBeDefined())
 })
 
+test('verifies that making a POST request successfully creates a new blog post', async () => {
+  const newBlog = {
+    title: "Test Blog",
+    author: "11P",
+    url: "hhtps://jlpalacios.es",
+    likes: 0
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.list.length + 1)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
