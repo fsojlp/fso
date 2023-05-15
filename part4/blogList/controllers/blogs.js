@@ -20,8 +20,7 @@ blogRouter.post('/', async (request, response) => {
 
   if (!body.title || !body.author || !body.url) {
     response.status(400).end()
-  }
-
+  } else {
   const likes = body.likes ? body.likes : 0 
 
   const blog = new Blog({
@@ -33,6 +32,7 @@ blogRouter.post('/', async (request, response) => {
 
   const savedBlog = await blog.save()
   response.json(savedBlog)
+  }
 })
 
 blogRouter.delete('/:id', async (request, response) => {

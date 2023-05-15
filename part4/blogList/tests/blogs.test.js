@@ -74,6 +74,20 @@ test('verifies that if the title and url properties of the requested data are mi
     .expect(400)
 })
 
+test('verifies that if possible delete a blog', async () => {
+  await api
+    .get('/api/blogs')
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  const id = response.body[response.body.length-1].id
+  
+  await api
+    .delete(`/api/blogs/${id}`)
+    .expect(204)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
