@@ -63,6 +63,17 @@ test('verifies that if the likes property is missing from the request, it will d
   expect(blogsAtEnd[blogsAtEnd.length-1].likes).toBe(0)
 })
 
+test('verifies that if the title and url properties of the requested data are missing, the backend responds with status code 400.', async () => {
+  const newBlog = {
+    author: "11P",
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
