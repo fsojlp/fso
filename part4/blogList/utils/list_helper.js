@@ -65,9 +65,44 @@ const mostBlogs = (blogList) => {
         return {author: result.author, blogs: result.blogs}
 }
 
+const mostLikes = (blogList) => {
+    let counter = []
+    if (blogList.length === 0){
+        return 0
+    }
+
+    if (blogList.length === 1){
+        return {author: blogList[0].author, likes: blogList[0].likes}
+    } else {
+        for(let i = 0; i < blogList.length; i++){
+            let auth = blogList[i].author
+            if(counter.length === 0){
+                counter.push({author:auth, likes: blogList[i].likes})
+            } else {
+              for(let j = 0; j < counter.length; j++){
+                 if(counter[j].author === auth){
+                    counter[j].likes += blogList[i].likes
+                } else {
+                    if(j === (counter.length - 1)){
+                        counter.push({author:auth, likes: 0})
+                    }
+                }    
+            }  
+            }
+            
+        }
+
+    }
+    const result = counter.reduce((previous, current) => {
+            return current.likes > previous.likes ? current : previous
+        })
+        return {author: result.author, likes: result.likes}
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
