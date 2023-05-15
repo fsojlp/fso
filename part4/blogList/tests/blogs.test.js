@@ -75,17 +75,30 @@ test('verifies that if the title and url properties of the requested data are mi
 })
 
 test('verifies that if possible delete a blog', async () => {
-  await api
-    .get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-
-  const response = await api.get('/api/blogs')
-  const id = response.body[response.body.length-1].id
+  const id = '5a422aa71b54a676234d17f8'
   
   await api
     .delete(`/api/blogs/${id}`)
     .expect(204)
+})
+
+test('verifies that if possible to modify a blog', async () => {
+  const id = '5a422ba71b54a676234d17fb'
+  const blog = {
+    title: "TDD harms architecture",
+    author: "Robert C. Martin",
+    url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
+    likes: 99
+  }
+
+  await api
+    .put(`/api/blogs/${id}`)
+    .send(blog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get(`/api/blogs/${id}`)
+  expect(response.body.likes).toBe(99)
 })
 
 afterAll(() => {

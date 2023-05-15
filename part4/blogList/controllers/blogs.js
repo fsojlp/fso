@@ -45,9 +45,8 @@ blogRouter.put('/:id', async (request, response) => {
 
   if (!body.title || !body.author || !body.url) {
     response.status(400).end()
-  }
-
-  const likes = body.likes ? body.likes : 0 
+  } else {
+    const likes = body.likes ? body.likes : 0 
 
   const blog = {
     title: body.title,
@@ -58,6 +57,8 @@ blogRouter.put('/:id', async (request, response) => {
 
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new:true })
   response.json(updatedBlog)
+  }
+  
 })
 
 module.exports = blogRouter
