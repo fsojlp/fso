@@ -31,8 +31,43 @@ const favoriteBlog = (blogList) => {
     }
 }
 
+const mostBlogs = (blogList) => {
+    let counter = []
+    if (blogList.length === 0){
+        return 0
+    }
+
+    if (blogList.length === 1){
+        return {author: blogList[0].author, blogs: 1}
+    } else {
+        for(let i = 0; i < blogList.length; i++){
+            let auth = blogList[i].author
+            if(counter.length === 0){
+                counter.push({author:auth, blogs: 1})
+            } else {
+              for(let j = 0; j < counter.length; j++){
+                 if(counter[j].author === auth){
+                    counter[j].blogs += 1
+                } else {
+                    if(j === (counter.length - 1)){
+                        counter.push({author:auth, blogs: 0})
+                    }
+                }    
+            }  
+            }
+            
+        }
+
+    }
+    const result = counter.reduce((previous, current) => {
+            return current.blogs > previous.blogs ? current : previous
+        })
+        return {author: result.author, blogs: result.blogs}
+}
+
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs
 }

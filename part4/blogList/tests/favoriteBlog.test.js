@@ -56,4 +56,9 @@ describe('favourite blog', () => {
         const result = listHelper.favoriteBlog(list)
         expect(result).toEqual({title: list[2].title, author: list[2].author, likes: list[2].likes})
     })
+
+    test('returns the author with most blogs', () => {
+      const result = listHelper.mostBlogs(list)
+      expect(result).toEqual({author: list[5].author, blogs: 3})
+    })
 })
