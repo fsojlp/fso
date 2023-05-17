@@ -6,7 +6,7 @@ usersRouter.post('/', async (request, response) => {
   const body = request.body
   if(!body.password){response.status(400).send('error: a valid password is required')}
   if(body.password.length < 3){
-    response.status(400).json({error:'password is shorter than the minimun allowed length'})
+    response.status(400).json({ error:'password is shorter than the minimun allowed length' })
   } else {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
@@ -24,7 +24,7 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.get('/', async (request, response) => {
-  const users = await User.find({}).populate('blogs', {url: 1, title: 1, author: 1, id: 1})
+  const users = await User.find({}).populate('blogs', { url: 1, title: 1, author: 1, id: 1 })
 
   response.json(users)
 })
