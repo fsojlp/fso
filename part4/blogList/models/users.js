@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     require: true,
     minlength: 3,
   },
-  passwordHash: String
+  passwordHash: String,
+  blogs: Object
 })
 
 userSchema.plugin(uniqueValidator)
