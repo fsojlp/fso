@@ -35,9 +35,21 @@ const tokenExtractor = (request, response, next) => {
   }
 }
 
+const userExtractor = (request, response, next) => {
+  const auth = request.get('authorization')
+  if (auth && auth.toLowerCase().startsWith('bearer ')) {
+    const all = auth.substring(7)
+    request.user = all
+    next()
+  } else {
+    next()
+  }
+}
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
-  tokenExtractor
+  tokenExtractor,
+  userExtractor
 }
