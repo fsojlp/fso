@@ -39,11 +39,30 @@ test('verifies that making a POST request successfully creates a new blog post',
   await api
     .post('/api/blogs')
     .send(newBlog)
+    .set({ Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMVAyIiwiaWQiOiI2NDY0YTJkNzE1MTJiNTg3ZDJhZjE3YTUiLCJpYXQiOjE2ODQ0MDIzMzAsImV4cCI6MTY4NDQwNTkzMH0.piZGOcRE1iyHT8iN0x6MIXtLLeYBLMzea4HgIfzhrQ0' })
     .expect(200)
     .expect('Content-Type', /application\/json/)
 
   const blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(helper.list.length + 1)
+})
+
+test('verifies that making a POST without token returns 401', async () => {
+  const newBlog = {
+    title: 'Test Blog2',
+    author: '11P',
+    url: 'https://jlpalacios.es',
+    likes: 0
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(401)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.list.length)
 })
 
 test('verifies that if the likes property is missing from the request, it will default to 0', async () => {
@@ -56,6 +75,7 @@ test('verifies that if the likes property is missing from the request, it will d
   await api
     .post('/api/blogs')
     .send(newBlog)
+    .set({ Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMVAyIiwiaWQiOiI2NDY0YTJkNzE1MTJiNTg3ZDJhZjE3YTUiLCJpYXQiOjE2ODQ0MDIzMzAsImV4cCI6MTY4NDQwNTkzMH0.piZGOcRE1iyHT8iN0x6MIXtLLeYBLMzea4HgIfzhrQ0' })
     .expect(200)
     .expect('Content-Type', /application\/json/)
 
@@ -71,6 +91,7 @@ test('verifies that if the title and url properties of the requested data are mi
   await api
     .post('/api/blogs')
     .send(newBlog)
+    .set({ Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMVAyIiwiaWQiOiI2NDY0YTJkNzE1MTJiNTg3ZDJhZjE3YTUiLCJpYXQiOjE2ODQ0MDIzMzAsImV4cCI6MTY4NDQwNTkzMH0.piZGOcRE1iyHT8iN0x6MIXtLLeYBLMzea4HgIfzhrQ0' })
     .expect(400)
 })
 
@@ -79,6 +100,7 @@ test('verifies that if possible delete a blog', async () => {
 
   await api
     .delete(`/api/blogs/${id}`)
+    .set({ Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMVAyIiwiaWQiOiI2NDY0YTJkNzE1MTJiNTg3ZDJhZjE3YTUiLCJpYXQiOjE2ODQ0MDIzMzAsImV4cCI6MTY4NDQwNTkzMH0.piZGOcRE1iyHT8iN0x6MIXtLLeYBLMzea4HgIfzhrQ0' })
     .expect(204)
 })
 
