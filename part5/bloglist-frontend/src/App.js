@@ -63,11 +63,19 @@ const App = () => {
     }
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBloglistAppUser')
+    setUser(null)
+  }
+
   return (
     <div>
       <Notification message={errorMessage} />
       {user ?
-        <BlogList blogs={blogs} /> :
+      <>
+        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} />
+      </>
+         :
         <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsername={handleUsername} handlePassword={handlePassword} />
       }
     </div>
