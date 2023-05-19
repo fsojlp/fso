@@ -1,4 +1,5 @@
 import React from 'react'
+import '../index.css'
 
 export const Notification = ({message}) => {
     if (message === null) {
@@ -6,8 +7,8 @@ export const Notification = ({message}) => {
     }
 
   return (
-    <div className='error'>
-        {message}
+    <div className={message.type}>
+        {message.text}
     </div>
   )
 }

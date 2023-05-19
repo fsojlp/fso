@@ -10,7 +10,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [message, setMessage] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -55,13 +55,13 @@ const App = () => {
       document.getElementById('Username').value=''
       document.getElementById('Password').value=''
     } catch (error) {
-      setErrorMessage('Wrong credentials')
+      setMessage({text:'Wrong credentials',type:'error'})
       setUsername('')
       setPassword('')
       document.getElementById('Username').value=''
       document.getElementById('Password').value=''
       setTimeout(() => {
-        setErrorMessage(null)
+        setMessage(null)
       }, 5000);
     }
   }
@@ -101,12 +101,16 @@ const App = () => {
         document.getElementById('Title').value=''
         document.getElementById('Author').value=''
         document.getElementById('Url').value=''
+        setMessage({text:`${returnedBlog.title} added`,type:'success'})
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000);
       })
   }
 
   return (
     <div>
-      <Notification message={errorMessage} />
+      <Notification message={message} />
       {user ?
       <>
         <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} />
