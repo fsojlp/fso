@@ -11,6 +11,9 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs => 
@@ -68,12 +71,45 @@ const App = () => {
     setUser(null)
   }
 
+  const handleTitle = (e) => {
+    setTitle(e.target.value)
+  }
+
+  const handleAuthor = (e) => {
+    setAuthor(e.target.value)
+  }
+
+  const handleUrl = (e) => {
+    setUrl(e.target.value)
+  }
+
+  const handleCreate = (e) => {
+    e.preventDefault()
+    const blog = {
+      title: title,
+      author: author,
+      url: url,
+    }
+
+    blogService
+      .create(blog)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+        document.getElementById('Title').value=''
+        document.getElementById('Author').value=''
+        document.getElementById('Url').value=''
+      })
+  }
+
   return (
     <div>
       <Notification message={errorMessage} />
       {user ?
       <>
-        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} />
+        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} />
       </>
          :
         <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsername={handleUsername} handlePassword={handlePassword} />
