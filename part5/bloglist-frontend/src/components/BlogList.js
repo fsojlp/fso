@@ -3,7 +3,7 @@ import { Blog } from './Blog'
 import { UserInfo } from './UserInfo'
 import { BlogForm } from './BlogForm'
 
-export const BlogList = ({ blogs, username, handleLogout, handleCreate, title, handleTitle, author, handleAuthor, url, handleUrl, handleShowForm, showForm }) => {
+export const BlogList = ({ blogs, username, handleLogout, handleCreate, title, handleTitle, author, handleAuthor, url, handleUrl, handleShowForm, showForm, like }) => {
 
   return (
     <div>
@@ -20,7 +20,7 @@ export const BlogList = ({ blogs, username, handleLogout, handleCreate, title, h
             <button onClick={handleShowForm}>new note</button>
         }
         {blogs.map(blog => 
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} like={like} />
         )}
     </div>
   )

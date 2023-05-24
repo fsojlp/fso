@@ -114,12 +114,30 @@ const App = () => {
     setShowForm(!showForm)
   }
 
+  const like = async (id) => {
+    const blogToVote = blogs.filter(b => b.id === id)
+    blogToVote[0].likes++
+    try {
+      blogService.vote(blogToVote[0])
+      setMessage({text:`voted from ${blogToVote[0].title}`,type:'success'})
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000); 
+    } catch (error) {
+      setMessage({text:`error voting ${blogToVote[0].title}`,type:'error'})
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000); 
+    }
+
+  }
+
   return (
     <div>
       <Notification message={message} />
       {user ?
       <>
-        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} handleShowForm={handleShowForm} showForm={showForm} />
+        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} handleShowForm={handleShowForm} showForm={showForm} like={like} />
       </>
          :
         <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsername={handleUsername} handlePassword={handlePassword} />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const Blog = ({blog}) => {
+export const Blog = ({blog, like}) => {
   const [show, setShow] = useState(false)
 
   const toogleShow = () => {
@@ -22,13 +22,12 @@ export const Blog = ({blog}) => {
         ?
           <>
           {blog.url}<br/>
-          likes: {blog.likes} <button>like</button><br/>
+          likes: {blog.likes} <button onClick={() => like(blog.id)}>like</button><br/>
           {blog.author}
           </>
         :
         <></>
         }
-        
     </div>
   )
 }

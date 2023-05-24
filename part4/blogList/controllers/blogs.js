@@ -77,6 +77,16 @@ blogRouter.delete('/:id', async (request, response) => {
 blogRouter.put('/:id', async (request, response) => {
   const body = request.body
 
+  if (!request.headers.authorization) {
+    return response.status(401).json({ error: 'token missing' })
+  }
+
+  // eslint-disable-next-line no-undef
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!decodedToken) {
+    return response.status(401).json({ error: 'token invalid' })
+  }
+
   if (!body.title || !body.author || !body.url) {
     response.status(400).end()
   } else {
