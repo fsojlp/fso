@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-export const Blog = ({blog, like, erase, username}) => {
+export const Blog = ({ blog, like, erase, username }) => {
   const [show, setShow] = useState(false)
 
   const toogleShow = () => {
@@ -17,25 +17,25 @@ export const Blog = ({blog, like, erase, username}) => {
 
   return (
     <div style={blogStyle}>
-        {blog.title} <button onClick={toogleShow}>{show ? 'hide' : 'show'}</button><br/>
-        {show 
+      {blog.title} <button onClick={toogleShow}>{show ? 'hide' : 'show'}</button><br/>
+      {show
         ?
-          <>
+        <>
           {blog.url}<br/>
           likes: {blog.likes} <button onClick={() => like(blog.id)}>like</button><br/>
           {blog.author}<br/>
 
-          {blog.user[0] 
-          ? blog.user[0].username === username
-            ?
-            <button onClick={() => {if(window.confirm(`Remove blog ${blog.title}?`)){erase(blog)}}}>remove</button>
+          {blog.user[0]
+            ? blog.user[0].username === username
+              ?
+              <button onClick={() => {if(window.confirm(`Remove blog ${blog.title}?`)){erase(blog)}}}>remove</button>
+              : <></>
             : <></>
-          : <></>
           }
-          </>
+        </>
         :
         <></>
-        }
+      }
     </div>
   )
 }
