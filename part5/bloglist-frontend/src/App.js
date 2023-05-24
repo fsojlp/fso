@@ -14,6 +14,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [showForm, setShowForm] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs => 
@@ -101,6 +102,7 @@ const App = () => {
         document.getElementById('Title').value=''
         document.getElementById('Author').value=''
         document.getElementById('Url').value=''
+        setShowForm(!showForm)
         setMessage({text:`${returnedBlog.title} added`,type:'success'})
         setTimeout(() => {
           setMessage(null)
@@ -108,12 +110,16 @@ const App = () => {
       })
   }
 
+  const handleShowForm = () => {
+    setShowForm(!showForm)
+  }
+
   return (
     <div>
       <Notification message={message} />
       {user ?
       <>
-        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} />
+        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} handleShowForm={handleShowForm} showForm={showForm} />
       </>
          :
         <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsername={handleUsername} handlePassword={handlePassword} />
