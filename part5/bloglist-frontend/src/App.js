@@ -30,7 +30,6 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
-  
 
   const handleUsername = (e) => {
     setUsername(e.target.value)
@@ -119,6 +118,7 @@ const App = () => {
     blogToVote[0].likes++
     try {
       blogService.vote(blogToVote[0])
+
       setMessage({text:`voted from ${blogToVote[0].title}`,type:'success'})
       setTimeout(() => {
         setMessage(null)
@@ -132,12 +132,29 @@ const App = () => {
 
   }
 
+  const erase = (blog) => {
+    try {
+      blogService.erase(blog.id)
+      const filtered = blogs.filter(b => b.id !== blog.id)
+      setBlogs(filtered)
+      setMessage({text:`Blog ${blog.title} deleted`,type:'success'})
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000);
+    } catch (error) {
+      setMessage({text:`Failed to delete blog ${blog.title}`,type:'error'})
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000);
+    }
+  }
+
   return (
     <div>
       <Notification message={message} />
       {user ?
       <>
-        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} handleShowForm={handleShowForm} showForm={showForm} like={like} />
+        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} handleShowForm={handleShowForm} showForm={showForm} like={like} erase={erase} />
       </>
          :
         <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsername={handleUsername} handlePassword={handlePassword} />

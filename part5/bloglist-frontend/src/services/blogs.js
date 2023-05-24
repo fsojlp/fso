@@ -28,5 +28,13 @@ const vote = async newObject => {
   return response.data
 }
 
+const erase = async id => {
+  const config = {
+    headers: { Authorization: token}
+  }
+  const response = await axios.delete(`${baseUrl}/${id}`, config)
+  return response.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, setToken, create, vote }
+export default { getAll, setToken, create, vote, erase }
