@@ -106,7 +106,7 @@ const App = () => {
         setMessage({text:`${returnedBlog.title} added`,type:'success'})
         setTimeout(() => {
           setMessage(null)
-        }, 5000);
+        }, 5000); 
       })
   }
 
