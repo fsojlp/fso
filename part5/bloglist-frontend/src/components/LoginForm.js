@@ -10,7 +10,7 @@ export const LoginForm = ({ handleLogin, username, password, handleUsername, han
       <div>
         password <input type='password' value={password} id='Password' onChange={handlePassword} />
       </div>
-      <button type='submit'>login</button>
+      <button type='submit' id='login-button'>login</button>
     </form>
   )
 }
