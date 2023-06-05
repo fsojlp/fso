@@ -2,7 +2,7 @@ import React from 'react'
 
 export const LoginForm = ({ handleLogin, username, password, handleUsername, handlePassword }) => {
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} id='loginForm'>
       <h1>Log in to application</h1>
       <div>
         username <input type='text' value={username} id='Username' onChange={handleUsername} />
