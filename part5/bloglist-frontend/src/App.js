@@ -17,7 +17,7 @@ const App = () => {
   const [showForm, setShowForm] = useState(false)
 
   useEffect(() => {
-    blogService.getAll().then(blogs => 
+    blogService.getAll().then(blogs =>
       setBlogs(blogs.sort((a, b) => b.likes - a.likes))
     )
   }, [])
@@ -55,14 +55,14 @@ const App = () => {
       document.getElementById('Username').value=''
       document.getElementById('Password').value=''
     } catch (error) {
-      setMessage({text:'Wrong credentials',type:'error'})
+      setMessage({ text:'Wrong credentials',type:'error' })
       setUsername('')
       setPassword('')
       document.getElementById('Username').value=''
       document.getElementById('Password').value=''
       setTimeout(() => {
         setMessage(null)
-      }, 5000);
+      }, 5000)
     }
   }
 
@@ -102,10 +102,10 @@ const App = () => {
         document.getElementById('Author').value=''
         document.getElementById('Url').value=''
         setShowForm(!showForm)
-        setMessage({text:`${returnedBlog.title} added`,type:'success'})
+        setMessage({ text:`${returnedBlog.title} added`,type:'success' })
         setTimeout(() => {
           setMessage(null)
-        }, 5000); 
+        }, 5000)
       })
   }
 
@@ -119,15 +119,15 @@ const App = () => {
     try {
       blogService.vote(blogToVote[0])
 
-      setMessage({text:`voted from ${blogToVote[0].title}`,type:'success'})
+      setMessage({ text:`voted from ${blogToVote[0].title}`,type:'success' })
       setTimeout(() => {
         setMessage(null)
-      }, 5000); 
+      }, 5000)
     } catch (error) {
-      setMessage({text:`error voting ${blogToVote[0].title}`,type:'error'})
+      setMessage({ text:`error voting ${blogToVote[0].title}`,type:'error' })
       setTimeout(() => {
         setMessage(null)
-      }, 5000); 
+      }, 5000)
     }
 
   }
@@ -137,15 +137,15 @@ const App = () => {
       blogService.erase(blog.id)
       const filtered = blogs.filter(b => b.id !== blog.id)
       setBlogs(filtered)
-      setMessage({text:`Blog ${blog.title} deleted`,type:'success'})
+      setMessage({ text:`Blog ${blog.title} deleted`,type:'success' })
       setTimeout(() => {
         setMessage(null)
-      }, 5000);
+      }, 5000)
     } catch (error) {
-      setMessage({text:`Failed to delete blog ${blog.title}`,type:'error'})
+      setMessage({ text:`Failed to delete blog ${blog.title}`,type:'error' })
       setTimeout(() => {
         setMessage(null)
-      }, 5000);
+      }, 5000)
     }
   }
 
@@ -153,10 +153,10 @@ const App = () => {
     <div>
       <Notification message={message} />
       {user ?
-      <>
-        <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} handleShowForm={handleShowForm} showForm={showForm} like={like} erase={erase} />
-      </>
-         :
+        <>
+          <BlogList blogs={blogs} username={user.username} handleLogout={handleLogout} title={title} handleTitle={handleTitle} author={author} handleAuthor={handleAuthor} url={url} handleUrl={handleUrl} handleCreate={handleCreate} handleShowForm={handleShowForm} showForm={showForm} like={like} erase={erase} />
+        </>
+        :
         <LoginForm handleLogin={handleLogin} username={username} password={password} handleUsername={handleUsername} handlePassword={handlePassword} />
       }
     </div>

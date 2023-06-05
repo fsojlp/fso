@@ -16,14 +16,13 @@ export const Blog = ({ blog, like, erase, username }) => {
   }
 
   return (
-    <div style={blogStyle}>
-      {blog.title} <button onClick={toogleShow}>{show ? 'hide' : 'show'}</button><br/>
+    <div style={blogStyle} className='blog-list'>
+      {blog.title} - {blog.author} <button onClick={toogleShow}>{show ? 'hide' : 'show'}</button><br/>
       {show
         ?
         <>
-          {blog.url}<br/>
+          url: {blog.url}<br/>
           likes: {blog.likes} <button onClick={() => like(blog.id)}>like</button><br/>
-          {blog.author}<br/>
 
           {blog.user[0]
             ? blog.user[0].username === username
