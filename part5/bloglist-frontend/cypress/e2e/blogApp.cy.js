@@ -50,10 +50,11 @@ describe.only('When logged in', function() {
       password: 'asdf1234'
     }
     cy.request('POST', `${Cypress.env('BACKEND')}/users`, user)
-    cy.visit('')
-    cy.get('#Username').type('test1')
-    cy.get('#Password').type('asdf1234')
-    cy.get('#login-button').click()
+    cy.request('POST', `${Cypress.env('BACKEND')}/login`, { 'username': 'test1', 'password': 'asdf1234' })
+      .then(response => {
+        window.localStorage.setItem('loggedBloglistAppUser', JSON.stringify(response.body))
+        cy.visit('')
+      })
   })
   it('A blog can be created', function() {
     cy.get('#newNote').click()
@@ -70,5 +71,16 @@ describe.only('When logged in', function() {
     cy.get('#createNote').click()
     cy.get('#showDetails').click()
     cy.get('#Like').click()
+  })
+  it('A blog can be removed', function() {
+    cy.get('#newNote').click()
+    cy.get('#Title').type('test1')
+    cy.get('#Author').type('author1')
+    cy.get('#Url').type('url1')
+    cy.get('#createNote').click()
+    cy.get('#showDetails').click()
+    cy.get('#RemoveClick').click().then(() => {
+      cy.on('window:confirm', cy.stub().returns(false))
+    })
   })
 })

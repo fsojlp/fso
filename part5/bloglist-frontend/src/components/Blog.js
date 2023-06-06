@@ -24,11 +24,9 @@ export const Blog = ({ blog, like, erase, username }) => {
           url: {blog.url}<br/>
           likes: {blog.likes} <button onClick={() => like(blog.id)} id='Like'>like</button><br/>
 
-          {blog.user[0]
-            ? blog.user[0].username === username
-              ?
-              <button onClick={() => {if(window.confirm(`Remove blog ${blog.title}?`)){erase(blog)}}}>remove</button>
-              : <></>
+          {blog.user[0].username === username
+            ?
+            <button onClick={() => {if(window.confirm(`Remove blog ${blog.title}?`)){erase(blog)}}} id='Remove'>remove</button>
             : <></>
           }
         </>
