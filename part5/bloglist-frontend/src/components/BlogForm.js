@@ -13,7 +13,7 @@ export const BlogForm = ({ handleCreate, title, handleTitle, author, handleAutho
       <div>
         url: <input type='text' value={url} id='Url' onChange={handleUrl} />
       </div>
-      <button type='submit'>create</button>
+      <button type='submit' id='createNote'>create</button>
     </form>
   )
 }
