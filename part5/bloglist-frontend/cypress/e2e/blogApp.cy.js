@@ -104,4 +104,5 @@ describe.only('When logged in', function() {
     cy.get('#showDetails').click()
     cy.get('html').should('not.contain', 'remove')
   })
+
 })
