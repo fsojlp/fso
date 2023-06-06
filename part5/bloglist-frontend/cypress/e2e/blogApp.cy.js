@@ -50,16 +50,25 @@ describe.only('When logged in', function() {
       password: 'asdf1234'
     }
     cy.request('POST', `${Cypress.env('BACKEND')}/users`, user)
-  })
-  it('A blog can be created', function() {
     cy.visit('')
     cy.get('#Username').type('test1')
     cy.get('#Password').type('asdf1234')
     cy.get('#login-button').click()
+  })
+  it('A blog can be created', function() {
     cy.get('#newNote').click()
     cy.get('#Title').type('test1')
     cy.get('#Author').type('author1')
     cy.get('#Url').type('url1')
     cy.get('#createNote').click()
+  })
+  it('A blog can be liked', function() {
+    cy.get('#newNote').click()
+    cy.get('#Title').type('test1')
+    cy.get('#Author').type('author1')
+    cy.get('#Url').type('url1')
+    cy.get('#createNote').click()
+    cy.get('#showDetails').click()
+    cy.get('#Like').click()
   })
 })

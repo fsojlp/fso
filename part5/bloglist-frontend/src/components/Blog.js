@@ -17,12 +17,12 @@ export const Blog = ({ blog, like, erase, username }) => {
 
   return (
     <div style={blogStyle} className='blog-list'>
-      {blog.title} - {blog.author} <button onClick={toogleShow}>{show ? 'hide' : 'show'}</button><br/>
+      {blog.title} - {blog.author} <button onClick={toogleShow} id='showDetails'>{show ? 'hide' : 'show'}</button><br/>
       {show
         ?
         <>
           url: {blog.url}<br/>
-          likes: {blog.likes} <button onClick={() => like(blog.id)}>like</button><br/>
+          likes: {blog.likes} <button onClick={() => like(blog.id)} id='Like'>like</button><br/>
 
           {blog.user[0]
             ? blog.user[0].username === username
