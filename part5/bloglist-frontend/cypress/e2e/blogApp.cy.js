@@ -49,7 +49,13 @@ describe.only('When logged in', function() {
       name: 'test1',
       password: 'asdf1234'
     }
+    const user2 = {
+      username: 'test2',
+      name: 'test2',
+      password: 'asdf1235'
+    }
     cy.request('POST', `${Cypress.env('BACKEND')}/users`, user)
+    cy.request('POST', `${Cypress.env('BACKEND')}/users`, user2)
     cy.request('POST', `${Cypress.env('BACKEND')}/login`, { 'username': 'test1', 'password': 'asdf1234' })
       .then(response => {
         window.localStorage.setItem('loggedBloglistAppUser', JSON.stringify(response.body))
@@ -82,5 +88,20 @@ describe.only('When logged in', function() {
     cy.get('#RemoveClick').click().then(() => {
       cy.on('window:confirm', cy.stub().returns(false))
     })
+  })
+  it('Other user cant remove a blog', function() {
+    cy.get('#newNote').click()
+    cy.get('#Title').type('test1')
+    cy.get('#Author').type('author1')
+    cy.get('#Url').type('url1')
+    cy.get('#Logout').click()
+    cy.request('POST', `${Cypress.env('BACKEND')}/login`, { 'username': 'test2', 'password': 'asdf1235' })
+      .then(response => {
+        window.localStorage.setItem('loggedBloglistAppUser', JSON.stringify(response.body))
+        cy.visit('')
+      })
+    cy.get('#createNote').click()
+    cy.get('#showDetails').click()
+    cy.get('html').should('not.contain', 'remove')
   })
 })
