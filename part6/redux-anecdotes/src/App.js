@@ -1,13 +1,13 @@
-import { createAnecdote } from './reducers/anecdoteReducer'
 import { Anecdotes } from './components/Anecdotes'
 import { AnecdoteForm } from './components/AnecdoteForm'
+import { AnecdoteList } from './components/AnecdoteList'
 
 const App = (props) => {
 
   return (
     <div>
       <h2>Anecdotes</h2>
-      <Anecdotes store={props.store} />
+      <AnecdoteList store={props.store} />
       <h2>create new</h2>
       <AnecdoteForm store={props.store} />
     </div>
