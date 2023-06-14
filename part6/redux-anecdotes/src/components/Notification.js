@@ -7,9 +7,15 @@ const Notification = ({ store }) => {
     borderWidth: 1
   }
 
+  const notificationMessage = store.getState().notifications
+
+  if (notificationMessage === '') {
+    return null
+  }
+
   return (
     <div style={style}>
-      {store.getState().notifications}
+      {notificationMessage}
     </div>
   )
 }
